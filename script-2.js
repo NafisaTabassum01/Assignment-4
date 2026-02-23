@@ -217,3 +217,26 @@ function renderrejection(){
     }
 
 }
+
+const deleteButtons = document.querySelectorAll('.delete');
+
+deleteButtons.forEach(function(button){
+    button.addEventListener('click', function(){
+
+        const card = button.closest('.Badge');
+        const companyName = card.querySelector('.companyName').innerText;
+        interviewList = interviewList.filter(job => job.companyName !== companyName);
+
+        rejectionList = rejectionList.filter(job => job.companyName !== companyName);
+
+        card.remove();
+
+        total.innerText = parseInt(total.innerText) - 1;
+        interviewCount.innerText = interviewList.length;
+        rejectionCount.innerText = rejectionList.length;
+
+        const jobCountElement = document.querySelector('.job-count');
+        const allCards = document.querySelectorAll('#allcard .Badge');
+        jobCountElement.innerText = allCards.length;
+    });
+});
