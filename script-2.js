@@ -52,7 +52,7 @@ selected.classList.add('bg-[#3B82F6]', 'text-white');
 if(id == 'interview-btn'){
     allCardCount.classList.add('hidden');
     filteredSection.classList.remove('hidden')
-    // renderInterview();
+    renderInterview();
 }
 else if(id== 'all-btn'){
     allCardCount.classList.remove('hidden')
@@ -98,8 +98,10 @@ const cardInfo={
 
    rejectionList= rejectionList.filter(item=> item.companyName != cardInfo.companyName)
    calculateCount()
+     if(currentStatus == 'rejected-btn')
+        renderrejection();
 
-   renderInterview()
+//    renderInterview()
 
 }
  else if(event.target.classList.contains('rejected-click')){
@@ -129,8 +131,6 @@ const cardInfo={
 
       interviewList= interviewList.filter(item=> item.companyName != cardInfo.companyName)
 
-     if(currentStatus == 'interview-btn')
-        renderInterview();
 
 
    calculateCount()
