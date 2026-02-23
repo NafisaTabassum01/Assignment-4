@@ -18,7 +18,7 @@ const rejectedBtn= document.getElementById('rejected-btn');
 const allCardCount = document.getElementById('allcard');
 const mainContainer= document.querySelector('main');
 const filteredSection =document.getElementById('filtered-section')
-
+const emptyImage = document.getElementById('empty-image');
 
 
 function calculateCount(){
@@ -143,6 +143,17 @@ const cardInfo={
 function renderInterview(){
   
     filteredSection.innerHTML =''
+
+if(interviewList.length === 0){
+        emptyImage.classList.remove('hidden');
+        filteredSection.appendChild(emptyImage);
+        return;
+    }
+
+    emptyImage.classList.add('hidden');
+
+
+
     for(let interview of interviewList){
 
         // console.log(interview)
@@ -172,6 +183,16 @@ function renderInterview(){
 function renderrejection(){
   
     filteredSection.innerHTML =''
+
+    if(rejectionList.length === 0){
+        emptyImage.classList.remove('hidden');
+        filteredSection.appendChild(emptyImage);
+        return;
+    }
+
+    emptyImage.classList.add('hidden');
+
+    
     for(let rejection of rejectionList){
 
         // console.log(rejection)
