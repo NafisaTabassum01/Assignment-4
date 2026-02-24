@@ -136,6 +136,27 @@ const cardInfo={
    calculateCount()
 
 }
+else if(event.target.closest('.delete')){
+
+    const card = event.target.closest('.Badge');
+    const company = card.querySelector('.companyName').innerText;
+
+    interviewList = interviewList.filter(item => item.companyName !== company);
+    rejectionList = rejectionList.filter(item => item.companyName !== company);
+
+    card.remove();
+
+    calculateCount();
+
+    if(currentStatus === 'interview-btn'){
+        renderInterview();
+    }
+
+    if(currentStatus === 'rejected-btn'){
+        renderrejection();
+    }
+
+}
    
 })
 
@@ -163,7 +184,7 @@ if(interviewList.length === 0){
         <h2 class="companyName text-[18px] font-semibold">${interview.companyName}</h2>
 <div class="flex justify-between">
     <p class="position text-[16px] text-[#64748B]">${interview.position}</p> 
-    <button class="btn bg-none rounded-full h-[32px] w-[32px]"><i class="fa-regular fa-trash-can my-auto opacity-60"></i></button>
+    <button class="delete btn bg-none rounded-full h-[32px] w-[32px]"><i class="fa-regular fa-trash-can my-auto opacity-60"></i></button>
 </div>
 
 <p class="salary text-[16px] text-[#64748B] mt-5">${interview.salary}</p>
@@ -202,7 +223,7 @@ function renderrejection(){
         <h2 class="companyName text-[18px] font-semibold">${rejection.companyName}</h2>
 <div class="flex justify-between">
     <p class="position text-[16px] text-[#64748B]">${rejection.position}</p> 
-    <button class="btn bg-none rounded-full h-[32px] w-[32px]"><i class="fa-regular fa-trash-can my-auto opacity-60"></i></button>
+    <button class="delete btn bg-none rounded-full h-[32px] w-[32px]"><i class="fa-regular fa-trash-can my-auto opacity-60"></i></button>
 </div>
 
 <p class="salary text-[16px] text-[#64748B] mt-5">${rejection.salary}</p>
@@ -218,35 +239,3 @@ function renderrejection(){
 
 }
 
-
-const deleteBtns = document.querySelectorAll('.delete');
-
-deleteBtns.forEach(function(btn){
-
-    btn.addEventListener('click', function(){
-
-        
-        const card = this.parentElement.parentElement;
-
-        const company = card.querySelector('.companyName').innerText;
-
-        interviewList = interviewList.filter(function(item){
-            return item.companyName !== company;
-        });
-
-        rejectionList = rejectionList.filter(function(item){
-            return item.companyName !== company;
-        });
-
-        card.remove();
-
-        total.innerText = document.querySelectorAll('#allcard > div').length;
-        interviewCount.innerText = interviewList.length;
-        rejectionCount.innerText = rejectionList.length;
-
-        document.querySelector('.job-count').innerText =
-            document.querySelectorAll('#allcard > div').length;
-
-    });
-
-});
