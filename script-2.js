@@ -1,6 +1,6 @@
 let interviewList = [];
 let rejectionList =[];
-let currentStatus ='all'
+let currentStatus ='all-btn'
 
 
 
@@ -22,9 +22,14 @@ const jobsImage = document.getElementById('jobs-image');
 
 
 function calculateCount(){
-total.innerText =allCardCount.children.length;
+
+const totalCards = document.querySelectorAll('#allcard .Badge').length;
+// total.innerText =allCardCount.children.length;
+total.innerText = totalCards;
 interviewCount.innerText =interviewList.length;
 rejectionCount.innerText =rejectionList.length;
+document.querySelector('.job-count').innerText = totalCards;
+
 
 
 
@@ -137,25 +142,25 @@ const cardInfo={
 
 }
 else if(event.target.closest('.delete')){
-
     const card = event.target.closest('.Badge');
     const company = card.querySelector('.companyName').innerText;
 
     interviewList = interviewList.filter(item => item.companyName !== company);
     rejectionList = rejectionList.filter(item => item.companyName !== company);
 
-    card.remove();
+    const allCard = document.querySelector('#allcard .Badge:nth-child(1)'); 
+
+    const originalCard = [...allCardCount.children].find(c => c.querySelector('.companyName').innerText === company);
+    if(originalCard) originalCard.remove();
+
+
+    if(currentStatus === 'all-btn'){
+        card.remove();
+    }
+    if(currentStatus === 'interview-btn') renderInterview();
+    if(currentStatus === 'rejected-btn') renderrejection();
 
     calculateCount();
-
-    if(currentStatus === 'interview-btn'){
-        renderInterview();
-    }
-
-    if(currentStatus === 'rejected-btn'){
-        renderrejection();
-    }
-
 }
    
 })
