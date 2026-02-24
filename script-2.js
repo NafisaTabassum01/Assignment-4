@@ -18,7 +18,7 @@ const rejectedBtn= document.getElementById('rejected-btn');
 const allCardCount = document.getElementById('allcard');
 const mainContainer= document.querySelector('main');
 const filteredSection =document.getElementById('filtered-section')
-const emptyImage = document.getElementById('empty-image');
+const jobsImage = document.getElementById('jobs-image');
 
 
 function calculateCount(){
@@ -145,12 +145,12 @@ function renderInterview(){
     filteredSection.innerHTML =''
 
 if(interviewList.length === 0){
-        emptyImage.classList.remove('hidden');
-        filteredSection.appendChild(emptyImage);
+        jobsImage.classList.remove('hidden');
+        filteredSection.appendChild(jobsImage);
         return;
     }
 
-    emptyImage.classList.add('hidden');
+    jobsImage.classList.add('hidden');
 
 
 
@@ -185,12 +185,12 @@ function renderrejection(){
     filteredSection.innerHTML =''
 
     if(rejectionList.length === 0){
-        emptyImage.classList.remove('hidden');
-        filteredSection.appendChild(emptyImage);
+        jobsImage.classList.remove('hidden');
+        filteredSection.appendChild(jobsImage);
         return;
     }
 
-    emptyImage.classList.add('hidden');
+    jobsImage.classList.add('hidden');
 
     
     for(let rejection of rejectionList){
@@ -218,25 +218,35 @@ function renderrejection(){
 
 }
 
-const deleteButtons = document.querySelectorAll('.delete');
 
-deleteButtons.forEach(function(button){
-    button.addEventListener('click', function(){
+const deleteBtns = document.querySelectorAll('.delete');
 
-        const card = button.closest('.Badge');
-        const companyName = card.querySelector('.companyName').innerText;
-        interviewList = interviewList.filter(job => job.companyName !== companyName);
+deleteBtns.forEach(function(btn){
 
-        rejectionList = rejectionList.filter(job => job.companyName !== companyName);
+    btn.addEventListener('click', function(){
+
+        
+        const card = this.parentElement.parentElement;
+
+        const company = card.querySelector('.companyName').innerText;
+
+        interviewList = interviewList.filter(function(item){
+            return item.companyName !== company;
+        });
+
+        rejectionList = rejectionList.filter(function(item){
+            return item.companyName !== company;
+        });
 
         card.remove();
 
-        total.innerText = parseInt(total.innerText) - 1;
+        total.innerText = document.querySelectorAll('#allcard > div').length;
         interviewCount.innerText = interviewList.length;
         rejectionCount.innerText = rejectionList.length;
 
-        const jobCountElement = document.querySelector('.job-count');
-        const allCards = document.querySelectorAll('#allcard .Badge');
-        jobCountElement.innerText = allCards.length;
+        document.querySelector('.job-count').innerText =
+            document.querySelectorAll('#allcard > div').length;
+
     });
+
 });
